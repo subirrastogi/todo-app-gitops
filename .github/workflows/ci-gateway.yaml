@@ -66,5 +66,7 @@ jobs:
 
           if ! git diff-index --quiet HEAD; then
             git commit -m "chore(gitops): update gateway image tag to ${IMAGE_TAG} [skip ci]"
-            git push
+            # Fetch latest remote commits and replay local commit on top
+            git pull --rebase origin main
+            git push origin main
           fi
