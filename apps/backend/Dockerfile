@@ -1,12 +1,9 @@
-# Stage 1: Build stage with JDK 21
-FROM eclipse-temurin:21-jdk-alpine AS build
-WORKDIR /app
-COPY . .
-RUN ./mvnw clean package -DskipTests
-
-# Stage 2: Runtime stage with JRE 21
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+
+RUN chgrp -R 0 /app && chmod -R g=u /app
+COPY target/*.jar app.jar
+
+USER 1001
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]

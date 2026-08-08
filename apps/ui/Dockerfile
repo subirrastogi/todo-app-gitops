@@ -1,4 +1,4 @@
-# Stage 1: Build Angular v22 App using Node 24
+# Stage 1: Build Angular App
 FROM node:24-alpine AS build
 WORKDIR /app
 
@@ -8,7 +8,7 @@ RUN npm ci
 COPY . .
 RUN npm run build -- --configuration=production
 
-# Stage 2: Serve using Unprivileged Nginx for OpenShift Sandbox (Port 8080)
+# Stage 2: Serve via Unprivileged Nginx (Port 8080)
 FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=build /app/dist/ui/browser /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
