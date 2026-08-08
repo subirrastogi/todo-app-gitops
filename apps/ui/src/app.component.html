@@ -1,0 +1,31 @@
+<div class="todo-container">
+  <mat-card class="todo-card">
+    <mat-card-header>
+      <mat-card-title>{{ title }}</mat-card-title>
+      <mat-card-subtitle>3-Tier Microservice Architecture Demo</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="add-task-form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>New Task</mat-label>
+          <input matInput [(ngModel)]="newTaskTitle" (keyup.enter)="addTask()" placeholder="e.g. Test Illumio microsegmentation">
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="addTask()">Add Task</button>
+      </div>
+
+      <mat-list>
+        @for (task of tasks; track task.id) {
+          <mat-list-item class="task-item">
+            <mat-checkbox [checked]="task.completed" (change)="toggleTask(task)">
+              <span [class.completed]="task.completed">{{ task.title }}</span>
+            </mat-checkbox>
+            <button mat-icon-button color="warn" (click)="deleteTask(task.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-list-item>
+        }
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>

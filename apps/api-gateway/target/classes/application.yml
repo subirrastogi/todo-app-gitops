@@ -8,7 +8,7 @@ spring:
     gateway:
       routes:
         - id: backend-service
-          uri: http://todo-backend:8080
+          uri: http://localhost:8080
           predicates:
             - Path=/api/v1/tasks/**
       globalcors:
