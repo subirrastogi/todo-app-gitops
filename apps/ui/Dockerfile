@@ -1,16 +1,10 @@
-# Stage 1: Build Angular App
-FROM node:24-alpine AS build
+FROM nginxinc/nginx-unprivileged:alpine
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm ci
+# Copy the pre-built Angular artifacts from the GitHub Actions runner
+COPY dist/ui/browser /usr/share/nginx/html
 
-COPY . .
-RUN npm run build -- --configuration=production
-
-# Stage 2: Serve via Unprivileged Nginx (Port 8080)
-FROM nginxinc/nginx-unprivileged:alpine
-COPY --from=build /app/dist/ui/browser /usr/share/nginx/html
+# Copy the Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 8080
