@@ -1,0 +1,61 @@
+global:
+  environment: development
+
+backend:
+  replicaCount: 1
+  image:
+    repository: quay.io/example/todo-backend
+    tag: latest
+    pullPolicy: Always
+  service:
+    type: ClusterIP
+    port: 8080
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+gateway:
+  replicaCount: 1
+  image:
+    repository: quay.io/example/todo-api-gateway
+    tag: latest
+    pullPolicy: Always
+  service:
+    type: ClusterIP
+    port: 8082
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+ui:
+  replicaCount: 1
+  image:
+    repository: quay.io/example/todo-ui
+    tag: latest
+    pullPolicy: Always
+  service:
+    type: ClusterIP
+    port: 80
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+route:
+  enabled: true
+  host: todo-app.apps.mycluster.example.com
+  tls:
+    enabled: true
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

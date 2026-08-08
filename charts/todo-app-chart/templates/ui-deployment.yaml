@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "todo-app-chart.name" . }}-ui
+  labels:
+    {{- include "todo-app-chart.labels" . | nindent 4 }}
+    app.kubernetes.io/component: ui
+spec:
+  replicas: {{ .Values.ui.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "todo-app-chart.name" . }}-ui
+  template:
+    metadata:
+      labels:
+        app: {{ include "todo-app-chart.name" . }}-ui
+    spec:
+      containers:
+        - name: ui
+          image: "{{ .Values.ui.image.repository }}:{{ .Values.ui.image.tag }}"
+          imagePullPolicy: {{ .Values.ui.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.ui.service.port }}
+              name: http
+          resources:
+            {{- toYaml .Values.ui.resources | nindent 12 }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.ui.service.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.ui.service.port }}
+            initialDelaySeconds: 10
+            periodSeconds: 15
