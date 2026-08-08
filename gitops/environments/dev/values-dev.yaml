@@ -1,6 +1,5 @@
 global:
   environment: dev
-
 backend:
   replicaCount: 1
   image:
@@ -10,19 +9,16 @@ backend:
     requests:
       cpu: 100m
       memory: 256Mi
-
 gateway:
   replicaCount: 1
   image:
     repository: quay.io/subirrastogi/todo-api-gateway
     tag: 857d49c
-
 ui:
   replicaCount: 1
   image:
     repository: quay.io/subirrastogi/todo-ui
-    tag: b48e199
-
+    tag: 3204d75
 route:
   enabled: true
   host: todo-dev.apps.mycluster.example.com
