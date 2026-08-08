@@ -27,7 +27,7 @@ jobs:
       - name: Install Dependencies & Build Angular
         run: |
           cd apps/ui
-          npm ci
+          npm ci --legacy-peer-deps
           npm run build -- --configuration=production
 
       - name: Extract Commit SHA
