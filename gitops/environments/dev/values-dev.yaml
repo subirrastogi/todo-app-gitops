@@ -1,6 +1,5 @@
 global:
   environment: dev
-
 backend:
   replicaCount: 1
   image:
@@ -10,13 +9,12 @@ backend:
     requests:
       cpu: 100m
       memory: 256Mi
-
 gateway:
   replicaCount: 1
-
+  image:
+    tag: 857d49c
 ui:
   replicaCount: 1
-
 route:
   enabled: true
   host: todo-dev.apps.mycluster.example.com
