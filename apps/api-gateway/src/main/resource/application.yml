@@ -1,0 +1,23 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: todo-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: backend-service
+          uri: http://todo-backend:8080
+          predicates:
+            - Path=/api/v1/tasks/**
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
