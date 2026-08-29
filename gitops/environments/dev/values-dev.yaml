@@ -4,7 +4,7 @@ backend:
   replicaCount: 1
   image:
     repository: quay.io/subirrastogi/todo-backend
-    tag: dev-latest
+    tag: b291113
   resources:
     requests:
       cpu: 100m
