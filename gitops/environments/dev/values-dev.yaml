@@ -13,7 +13,7 @@ gateway:
   replicaCount: 1
   image:
     repository: quay.io/subirrastogi/todo-api-gateway
-    tag: 857d49c
+    tag: "0506166"
 ui:
   replicaCount: 1
   image:
