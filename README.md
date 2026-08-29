@@ -52,3 +52,8 @@ This showcase project uses a **Monorepo** design for simplification and to be ab
 * **Atomic Versioning:** Code changes in microservices and corresponding Helm chart updates stay synchronized in a single Git commit.
 
 > **Enterprise Production Note:** In enterprise environments, a **Multi-Repo** strategy is recommended. Decoupling application source code (`ui`, `api-gateway`, `backend`), shared Helm charts (`charts`), and environment manifests (`gitops`) into separate repositories enforces strict RBAC permissions, limits deployment blast radius, and supports organizational team boundaries (e.g., Application Developers vs. Platform Security Teams).
+
+
+## OpenShift Developer Sandboxed cluster
+https://developers.redhat.com/developer-sandbox
+Or https://sandbox.redhat.com/
