@@ -59,15 +59,23 @@ jobs:
           IMAGE_TAG="${{ steps.vars.outputs.SHA_SHORT }}"
           FILE="gitops/environments/dev/values-dev.yaml"
 
-          yq eval ".ui.image.tag = \"${IMAGE_TAG}\"" -i ${FILE}
-
+          # 1. Configure Bot Identity
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add ${FILE}
 
+          # 2. Clean up any unstaged changes
+          git reset --hard HEAD
+          git clean -fd
+
+          # 3. Rebase first to ensure we are on the latest remote HEAD
+          git pull --rebase origin main
+
+          # 4. Update the YAML file
+          yq eval ".ui.image.tag = \"${IMAGE_TAG}\"" -i ${FILE}
+
+          # 5. Commit and Push ONLY the values file
+          git add ${FILE}
           if ! git diff-index --quiet HEAD; then
             git commit -m "chore(gitops): update ui image tag to ${IMAGE_TAG} [skip ci]"
-            # Fetch latest remote commits and replay local commit on top
-            git pull --rebase origin main
             git push origin main
           fi
