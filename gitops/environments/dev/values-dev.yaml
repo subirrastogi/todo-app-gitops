@@ -18,7 +18,7 @@ ui:
   replicaCount: 1
   image:
     repository: quay.io/subirrastogi/todo-ui
-    tag: 0004ab9
+    tag: da692fb
 route:
   enabled: true
   host: todo-dev.apps.mycluster.example.com
