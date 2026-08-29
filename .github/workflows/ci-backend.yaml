@@ -62,13 +62,17 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # 2. Rebase first to ensure we are on the latest remote HEAD
+          # 2. Clean up any unstaged changes
+          git reset --hard HEAD
+          git clean -fd
+
+          # 3. Rebase first to ensure we are on the latest remote HEAD
           git pull --rebase origin main
 
-          # 3. Update the YAML file
+          # 4. Update the YAML file
           yq eval ".backend.image.tag = \"${IMAGE_TAG}\"" -i ${FILE}
 
-          # 4. Commit and Push ONLY the values file
+          # 5. Commit and Push ONLY the values file
           git add ${FILE}
           if ! git diff-index --quiet HEAD; then
             git commit -m "chore(gitops): update backend image tag to ${IMAGE_TAG} [skip ci]"
